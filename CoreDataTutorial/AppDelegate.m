@@ -16,7 +16,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  // Override point for customization after application launch.
+
+  NSManagedObjectContext *context = [self managedObjectContext];
+  if (!context) {
+    // エラーを処理する。
+  }
+  
   return YES;
 }
 
