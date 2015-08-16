@@ -26,11 +26,14 @@
   AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
   self.managedObjectContext = appDelegate.managedObjectContext;
   
-  // タイトルを設定する。 self.title = @"Locations";
-  // ボタンをセットアップする。 self.navigationItem.leftBarButtonItem = self.editButtonItem;
-  self.addButton = [[UIBarButtonItem alloc]
-               initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-               target:self action:@selector(addEvent)];
+  // タイトルを設定する。
+  self.title = @"Locations";
+
+  // ボタンをセットアップする。
+  self.navigationItem.leftBarButtonItem = self.editButtonItem;
+  self.addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                                 target:self
+                                                                 action:@selector(addEvent)];
   self.addButton.enabled = NO;
   self.navigationItem.rightBarButtonItem = self.addButton;
 
@@ -65,12 +68,6 @@
   }
 
   self.eventsArray = mutableFetchResults;
-}
-
-- (void)viewDidUnload {
-  self.eventsArray = nil;
-  self.locationManager = nil;
-  self.addButton = nil;
 }
 
 - (void)didReceiveMemoryWarning {
