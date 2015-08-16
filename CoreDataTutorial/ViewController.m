@@ -24,4 +24,16 @@
   // Dispose of any resources that can be recreated.
 }
 
+#pragma mark -
+
+- (CLLocationManager *)locationManager {
+  if (self.locationManager != nil) {
+    return self.locationManager;
+  }
+  self.locationManager = [[CLLocationManager alloc] init];
+  self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+  self.locationManager.delegate = self;
+  return self.locationManager;
+}
+
 @end

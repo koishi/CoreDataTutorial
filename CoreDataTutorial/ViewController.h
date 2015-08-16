@@ -7,9 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <CLLocationManagerDelegate>
 
+@property (nonatomic, strong) NSMutableArray *eventsArray;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) UIBarButtonItem *addButton;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
