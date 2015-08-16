@@ -163,4 +163,30 @@
   return cell;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+                                            forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  
+  if (editingStyle == UITableViewCellEditingStyleDelete) {
+    // 指定のインデックスパスにある管理オブジェクトを削除する。
+    NSManagedObject *eventToDelete = [self.eventsArray objectAtIndex:indexPath.row];
+    [self.managedObjectContext deleteObject:eventToDelete];
+    // 配列とTable Viewを更新する。
+    [self.eventsArray removeObjectAtIndex:indexPath.row];
+    [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                     withRowAnimation:YES];
+  }
+  // 変更をコミットする。
+  NSError *error = nil;
+  if (![self.managedObjectContext save:&error]) {
+    // エラーを処理する。
+  }
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+  [super setEditing:editing animated:animated];
+  [self.tableView setEditing:editing animated:animated];
+}
+
 @end
