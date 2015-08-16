@@ -19,6 +19,11 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  
+  self.tableView.delegate = self;
+
+  self.eventsArray = [[NSMutableArray alloc] init];
+  
   // appDelegate.managedObjectContextを参照
   AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
   self.managedObjectContext = appDelegate.managedObjectContext;
@@ -96,6 +101,51 @@
   if (![self.managedObjectContext save:&error]) {
     // エラーを処理する。
   }
+
+  // tableView向け処理
+  [self.eventsArray insertObject:event atIndex:0];
+  NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+  [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                        withRowAnimation:UITableViewRowAnimationFade];
+  [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
+
+#pragma mark - UITableView
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+  return [self.eventsArray count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  // タイムスタンプ用の日付フォーマッタ
+  static NSDateFormatter *dateFormatter = nil; if (dateFormatter == nil) {
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+  }
+  // 緯度と経度用の数値フォーマッタ
+  static NSNumberFormatter *numberFormatter = nil; if (numberFormatter == nil) {
+    numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    [numberFormatter setMaximumFractionDigits:3];
+  }
+  
+  static NSString *CellIdentifier = @"Cell";
+  // 新規セルをデキューまたは作成する
+  UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
+  if (cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+  }
+
+  Event *event = (Event *)[self.eventsArray objectAtIndex:indexPath.row];
+  cell.textLabel.text = [dateFormatter stringFromDate:[event creationDate]];
+  NSString *string = [NSString stringWithFormat:@"%@, %@",
+                      [numberFormatter stringFromNumber:[event latitude]],     [numberFormatter stringFromNumber:[event longitude]]];
+  cell.detailTextLabel.text = string;
+  return cell;
 }
 
 @end
