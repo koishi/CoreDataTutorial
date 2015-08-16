@@ -72,4 +72,25 @@
   self.addButton.enabled = NO;
 }
 
+- (void)addEvent
+{
+  CLLocation *location = [self.locationManager location];
+  if (!location) {
+    return;
+  }
+
+  // Eventエンティティの新規インスタンスを作成して設定する
+  Event *event = (Event *)[NSEntityDescription insertNewObjectForEntityForName:@"Event"
+                                                        inManagedObjectContext:self.managedObjectContext];
+  CLLocationCoordinate2D coordinate = [location coordinate];
+  [event setLatitude:[NSNumber numberWithDouble:coordinate.latitude]];
+  [event setLongitude:[NSNumber numberWithDouble:coordinate.longitude]];
+  [event setCreationDate:[NSDate date]];
+
+  NSError *error = nil;
+  if (![self.managedObjectContext save:&error]) {
+    // エラーを処理する。
+  }
+}
+
 @end
