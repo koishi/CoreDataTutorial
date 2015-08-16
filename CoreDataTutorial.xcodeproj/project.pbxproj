@@ -15,6 +15,7 @@
 		431E215C1B80213C00F1AB1E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 431E215B1B80213C00F1AB1E /* Images.xcassets */; };
 		431E215F1B80213C00F1AB1E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 431E215D1B80213C00F1AB1E /* LaunchScreen.xib */; };
 		431E216B1B80213C00F1AB1E /* CoreDataTutorialTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 431E216A1B80213C00F1AB1E /* CoreDataTutorialTests.m */; };
+		431E21761B80425D00F1AB1E /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 431E21751B80425D00F1AB1E /* Event.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,8 @@
 		431E21641B80213C00F1AB1E /* CoreDataTutorialTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoreDataTutorialTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		431E21691B80213C00F1AB1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		431E216A1B80213C00F1AB1E /* CoreDataTutorialTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataTutorialTests.m; sourceTree = "<group>"; };
+		431E21741B80425D00F1AB1E /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		431E21751B80425D00F1AB1E /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +95,8 @@
 				431E215D1B80213C00F1AB1E /* LaunchScreen.xib */,
 				431E21521B80213C00F1AB1E /* CoreDataTutorial.xcdatamodeld */,
 				431E214B1B80213C00F1AB1E /* Supporting Files */,
+				431E21741B80425D00F1AB1E /* Event.h */,
+				431E21751B80425D00F1AB1E /* Event.m */,
 			);
 			path = CoreDataTutorial;
 			sourceTree = "<group>";
@@ -224,6 +229,7 @@
 			files = (
 				431E21511B80213C00F1AB1E /* AppDelegate.m in Sources */,
 				431E214E1B80213C00F1AB1E /* main.m in Sources */,
+				431E21761B80425D00F1AB1E /* Event.m in Sources */,
 				431E21571B80213C00F1AB1E /* ViewController.m in Sources */,
 				431E21541B80213C00F1AB1E /* CoreDataTutorial.xcdatamodeld in Sources */,
 			);
