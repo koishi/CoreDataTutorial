@@ -19,11 +19,9 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  
   self.tableView.delegate = self;
+  self.tableView.dataSource = self;
 
-  self.eventsArray = [[NSMutableArray alloc] init];
-  
   // appDelegate.managedObjectContextを参照
   AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
   self.managedObjectContext = appDelegate.managedObjectContext;
@@ -47,6 +45,26 @@
   }
   
   [[self locationManager] startUpdatingLocation];
+  
+  
+  // フェッチ
+  NSFetchRequest *request = [[NSFetchRequest alloc] init];
+  NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event"
+                                            inManagedObjectContext:self.managedObjectContext];
+  [request setEntity:entity];
+  
+  NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
+                                      initWithKey:@"creationDate" ascending:NO];
+  NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+  [request setSortDescriptors:sortDescriptors];
+  
+  NSError *error = nil;
+  NSMutableArray *mutableFetchResults = [[self.managedObjectContext
+                                          executeFetchRequest:request error:&error] mutableCopy];
+  if (mutableFetchResults == nil) { // エラーを処理する。
+  }
+
+  self.eventsArray = mutableFetchResults;
 }
 
 - (void)viewDidUnload {
