@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "Event.h"
+#import "AppDelegate.h"
 
 @interface ViewController ()
 
@@ -18,6 +19,10 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  // appDelegate.managedObjectContextを参照
+  AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+  self.managedObjectContext = appDelegate.managedObjectContext;
+  
   // タイトルを設定する。 self.title = @"Locations";
   // ボタンをセットアップする。 self.navigationItem.leftBarButtonItem = self.editButtonItem;
   self.addButton = [[UIBarButtonItem alloc]
