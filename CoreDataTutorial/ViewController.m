@@ -50,6 +50,7 @@
 
 #pragma mark -
 
+// サンプルのこの実装エラーになるのでコメント化、viewDidLoadに仮実装
 //- (CLLocationManager *)locationManager {
 //  if (self.locationManager != nil) {
 //    return self.locationManager;
