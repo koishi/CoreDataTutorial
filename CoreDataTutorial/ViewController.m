@@ -38,17 +38,11 @@
   self.navigationItem.rightBarButtonItem = self.addButton;
 
   // locationManagerの処理
-  self.locationManager = [CLLocationManager new];
-  [self.locationManager setDelegate:self];
-  [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
-  [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
-  
-  if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-    [self.locationManager requestWhenInUseAuthorization];
+  CLLocationManager *locationManager = [self sharedLocationManager];
+  if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+    [locationManager requestWhenInUseAuthorization];
   }
-  
-  [[self locationManager] startUpdatingLocation];
-  
+  [locationManager startUpdatingLocation];
   
   // フェッチ
   NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -74,24 +68,26 @@
   [super didReceiveMemoryWarning];
 }
 
-#pragma mark -
+#pragma mark - LocationManager
 
-// サンプルのこの実装エラーになるのでコメント化、viewDidLoadに仮実装
-//- (CLLocationManager *)locationManager {
-//  if (self.locationManager != nil) {
-//    return self.locationManager;
-//  }
-//  self.locationManager = [[CLLocationManager alloc] init];
-//  self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-//  self.locationManager.delegate = self;
-//  return self.locationManager;
-//}
+- (CLLocationManager *)sharedLocationManager
+{
+  if (self.locationManager != nil) {
+    return self.locationManager;
+  }
+  self.locationManager = [[CLLocationManager alloc] init];
+  self.locationManager.delegate = self;
+  self.locationManager.distanceFilter = kCLDistanceFilterNone;
+  self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+  return self.locationManager;
+}
 
 - (void)locationManager:(CLLocationManager *)manager
     didUpdateToLocation:(CLLocation *)newLocation
            fromLocation:(CLLocation *)oldLocation {
   self.addButton.enabled = YES;
 }
+
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *)error {
   self.addButton.enabled = NO;
@@ -125,7 +121,7 @@
   [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
-#pragma mark - UITableView
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -182,6 +178,8 @@
     // エラーを処理する。
   }
 }
+
+# pragma mark - Event
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
